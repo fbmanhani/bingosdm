@@ -16,7 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Random random;
     private ArrayList<Integer> listaSorteados;
-    private TextView sorteadosTextView;
+    private TextView sorteadosBTextView;
+    private TextView sorteadosITextView;
+    private TextView sorteadosNTextView;
+    private TextView sorteadosGTextView;
+    private TextView sorteadosOTextView;
     private TextView sorteadoTextView;
 
     @Override
@@ -27,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         random = new Random(System.currentTimeMillis());
         listaSorteados = new ArrayList<>();
-        sorteadosTextView = findViewById(R.id.sorteadosTextView);
+        sorteadosBTextView = findViewById(R.id.sorteadosBTextView);
+        sorteadosITextView = findViewById(R.id.sorteadosITextView);
+        sorteadosNTextView = findViewById(R.id.sorteadosNTextView);
+        sorteadosGTextView = findViewById(R.id.sorteadosGTextView);
+        sorteadosOTextView = findViewById(R.id.sorteadosOTextView);
         sorteadoTextView = findViewById(R.id.sorteadoTextView);
     }
 
@@ -40,21 +48,24 @@ public class MainActivity extends AppCompatActivity {
                     numero = random.nextInt(75) + 1;
                 }
                 listaSorteados.add(numero);
-                sorteadosTextView.setText(sorteadosTextView.getText() + numero.toString() + " ");
-
                 String letra = "";
                 if (numero >= 1 && numero <= 15) {
                     letra = "B";
+                    sorteadosBTextView.setText(String.format("%s%s ", sorteadosBTextView.getText(), numero.toString()));
                 } else if (numero >= 16 && numero <= 30) {
                     letra = "I";
+                    sorteadosITextView.setText(String.format("%s%s ", sorteadosITextView.getText(), numero.toString()));
                 } else if (numero >= 31 && numero <= 45) {
                     letra = "N";
+                    sorteadosNTextView.setText(String.format("%s%s ", sorteadosNTextView.getText(), numero.toString()));
                 } else if (numero >= 46 && numero <= 60) {
                     letra = "G";
+                    sorteadosGTextView.setText(String.format("%s%s ", sorteadosGTextView.getText(), numero.toString()));
                 } else if (numero >= 61 && numero <= 75) {
                     letra = "O";
+                    sorteadosOTextView.setText(String.format("%s%s ", sorteadosOTextView.getText(), numero.toString()));
                 }
-                sorteadoTextView.setText(letra + numero);
+                sorteadoTextView.setText(String.format("%s%d", letra, numero));
             } else {
                 Toast.makeText(this, "Não há mais números à serem sorteados", Toast.LENGTH_SHORT).show();
             }
@@ -71,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             listaSorteados.clear();
-                            sorteadosTextView.setText(null);
+                            sorteadosBTextView.setText(null);
+                            sorteadosITextView.setText(null);
+                            sorteadosNTextView.setText(null);
+                            sorteadosGTextView.setText(null);
+                            sorteadosOTextView.setText(null);
                             sorteadoTextView.setText(null);
                         }
                     })
@@ -88,7 +103,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("sorteadosTxt", sorteadosTextView.getText().toString());
+        outState.putString("sorteadosBTxt", sorteadosBTextView.getText().toString());
+        outState.putString("sorteadosITxt", sorteadosITextView.getText().toString());
+        outState.putString("sorteadosNTxt", sorteadosNTextView.getText().toString());
+        outState.putString("sorteadosGTxt", sorteadosGTextView.getText().toString());
+        outState.putString("sorteadosOTxt", sorteadosOTextView.getText().toString());
         outState.putString("sorteadoTxt", sorteadoTextView.getText().toString());
         outState.putIntegerArrayList("listaSorteados", listaSorteados);
     }
@@ -97,9 +116,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-            sorteadosTextView.setText(savedInstanceState.getString("sorteadosTxt", null));
+            sorteadosBTextView.setText(savedInstanceState.getString("sorteadosBTxt", null));
+            sorteadosITextView.setText(savedInstanceState.getString("sorteadosITxt", null));
+            sorteadosNTextView.setText(savedInstanceState.getString("sorteadosNTxt", null));
+            sorteadosGTextView.setText(savedInstanceState.getString("sorteadosGTxt", null));
+            sorteadosOTextView.setText(savedInstanceState.getString("sorteadosOTxt", null));
             sorteadoTextView.setText(savedInstanceState.getString("sorteadoTxt", null));
             listaSorteados = savedInstanceState.getIntegerArrayList("listaSorteados");
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sorteadosBTextView = null;
+        sorteadosITextView = null;
+        sorteadosNTextView = null;
+        sorteadosGTextView = null;
+        sorteadosOTextView = null;
+        sorteadoTextView = null;
+        listaSorteados = null;
     }
 }
